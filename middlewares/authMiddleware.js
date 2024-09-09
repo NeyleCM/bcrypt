@@ -1,12 +1,13 @@
 const jwt = require('jsonwebtoken');
 const { hashedSecret } = require('../crypto/config');
 
-// Generar un token JWT
+// Genera un token JWT cuando el usuario inicia sesión correctamente.
 const generarToken = (user) => {
   return jwt.sign({ userId: user.id }, hashedSecret, { expiresIn: '1h' });
 };
 
-// Verificar el token JWT
+//Verifica que el token proporcionado sea válido. 
+//Si no lo es, no permite el acceso a rutas protegidas.
 const verificarToken = (req, res, next) => {
   const token = req.session.token;  // El token se almacena en la sesión
   if (!token) {
